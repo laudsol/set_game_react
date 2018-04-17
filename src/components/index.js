@@ -26,30 +26,25 @@ class SetGame extends React.Component{
     }
 
     setInitialCards(){
-        for(let i = 0; i < 12; i++){
-            this.generateNewCard()
-        }
-    }
-
-    generateNewCard(removalCardIndex){
         let previousState = this.state
-        let cardArr = previousState.cardArr
-        let randomIndex = Math.round(Math.random()*(cardArr.length-1))
-        let newCard = cardArr[randomIndex]
         
-        previousState.cardArr = cardArr.slice(0,randomIndex).concat(cardArr.slice(randomIndex+1,cardArr.length))
-
-        if(removalCardIndex >= 0){
-            previousState.displayedCards[removalCardIndex] = newCard
-        } else {
-            previousState.displayedCards.push(newCard)
+        for(let i = 0; i < 12; i++){
+            let cardArr = previousState.cardArr
+            let randomIndex = this.generateNewCardIndex(cardArr)
+            let newCard = cardArr[randomIndex]
+            previousState.cardArr = this.removeOldCard(cardArr, randomIndex)
+            previousState.displayedCards.push(newCard)    
         }
 
         this.setState(previousState)
     }
 
-    generateNewCardIndex(){
-        return Math.round(Math.random()*(this.state.cardArr.length-1))
+    generateNewCardIndex(cardArr){
+        return Math.round(Math.random()*(cardArr.length-1))
+    }
+
+    removeOldCard(cardArr, index){
+        return cardArr.slice(0,index).concat(cardArr.slice(index+1,cardArr.length))
     }
 
     createCardCode(card){
@@ -79,7 +74,9 @@ class SetGame extends React.Component{
     }
 
     getSelectedCards(){
-        return this.state.displayedCards.filter(card => !!card.isSelected)
+        return this.state.displayedCards
+            .map((card,i) => {return {cardInfo: card, index: i}})
+            .filter(card => !!card.cardInfo.isSelected)
     }
 
     replaceSetWithNewCards(){
@@ -115,9 +112,9 @@ class SetGame extends React.Component{
             return 
         }
 
-        let card1 = selectedCards[0]
-        let card2 = selectedCards[1]
-        let card3 = selectedCards[2]
+        let card1 = selectedCards[0].cardInfo
+        let card2 = selectedCards[1].cardInfo
+        let card3 = selectedCards[2].cardInfo
 
         let numberCheck = this.checkNumbers(card1, card2, card3)
         let colorCheck = this.checkColors(card1, card2, card3)
@@ -127,6 +124,13 @@ class SetGame extends React.Component{
         if(numberCheck && colorCheck && shapeCheck && fillCheck){
             previousState.successFailText = 'Congratulations! You have selected a valid set!'
             previousState.score += 1
+            selectedCards.forEach(card => {
+                let cardArr = previousState.cardArr
+                let randomIndex = this.generateNewCardIndex(cardArr)
+                let newCard = cardArr[randomIndex]
+                previousState.cardArr = this.removeOldCard(cardArr, card.index)
+                previousState.displayedCards[card.index] = newCard
+            })
         } else {
             previousState.successFailText = 'Unfortunately this is not a valid set. Please try again!'
         }
