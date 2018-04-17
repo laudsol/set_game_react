@@ -6,10 +6,6 @@ class Card extends React.Component{
         this.state = {}
     }
 
-    // componentDidMount(){
-    //     this.setState({cardData: this.props.cardData})
-    // }
-
     classNameBuilder(cardData){
         let shapeColorName = ''
         let colorName = cardData.color.split('')

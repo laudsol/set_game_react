@@ -17,7 +17,7 @@ class SetButton extends React.Component{
                 <div className="successFailText">{this.props.successFailText}
                 </div>
                 <Button bsStyle="primary" bsSize="large" onClick={()=> this.evaluateSet()}>
-                    Set Button
+                    Submit Set
                 </Button>
             </div>
         )

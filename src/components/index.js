@@ -1,6 +1,6 @@
 import React from 'react'
 import CardTable from './CardTable'
-import SetButton from './SetButton'
+import SubmitSetButton from './SubmitSetButton'
 import cardData from '../assets/cardData'
 import Score from './Score'
 
@@ -174,13 +174,12 @@ class SetGame extends React.Component{
     
 
     render() {
-        console.log(this.state.displayedCards)
         return (
             <div>
                 <Score
                     currentScore={this.state.score}
                 />
-                <SetButton
+                <SubmitSetButton
                     evaluateSet={this.evaluateSet}
                     successFailText={this.state.successFailText}
                 />
