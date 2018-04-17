@@ -3,6 +3,7 @@ import CardTable from './CardTable'
 import SubmitSetButton from './SubmitSetButton'
 import cardData from '../assets/cardData'
 import Score from './Score'
+import AddCardsButton from './AddCardsButton'
 
 class SetGame extends React.Component{
     constructor(props){
@@ -22,17 +23,17 @@ class SetGame extends React.Component{
 
 
     componentDidMount(){
-        this.setInitialCards()
+        this.addCards(12)
     }
 
-    setInitialCards(){
+    addCards = (cardAmount) => {
         let previousState = this.state
         
-        for(let i = 0; i < 12; i++){
+        for(let i = 0; i < cardAmount; i++){
             let cardArr = previousState.cardArr
             let randomIndex = this.generateNewCardIndex(cardArr)
             let newCard = cardArr[randomIndex]
-            previousState.cardArr = this.removeOldCard(cardArr, randomIndex)
+            previousState.cardArr = this.removeUsedCard(cardArr, randomIndex)
             previousState.displayedCards.push(newCard)    
         }
 
@@ -43,7 +44,7 @@ class SetGame extends React.Component{
         return Math.round(Math.random()*(cardArr.length-1))
     }
 
-    removeOldCard(cardArr, index){
+    removeUsedCard(cardArr, index){
         return cardArr.slice(0,index).concat(cardArr.slice(index+1,cardArr.length))
     }
 
@@ -105,7 +106,7 @@ class SetGame extends React.Component{
                 let cardArr = previousState.cardArr
                 let randomIndex = this.generateNewCardIndex(cardArr)
                 let newCard = cardArr[randomIndex]
-                previousState.cardArr = this.removeOldCard(cardArr, randomIndex)
+                previousState.cardArr = this.removeUsedCard(cardArr, randomIndex)
                 previousState.displayedCards[card.index] = newCard
             })
         } else {
@@ -171,7 +172,6 @@ class SetGame extends React.Component{
     
         return false    
     }
-    
 
     render() {
         return (
@@ -182,6 +182,9 @@ class SetGame extends React.Component{
                 <SubmitSetButton
                     evaluateSet={this.evaluateSet}
                     successFailText={this.state.successFailText}
+                />
+                <AddCardsButton
+                    addCards={this.addCards}
                 />
                 <CardTable
                     activeCards={this.state.displayedCards}

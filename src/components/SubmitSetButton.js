@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 
-class SetButton extends React.Component{
+class SubmitSetButton extends React.Component{
     constructor(props){
         super(props)
         this.state = {}
@@ -24,4 +24,4 @@ class SetButton extends React.Component{
     }    
 }
 
-export default SetButton
+export default SubmitSetButton
