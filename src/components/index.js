@@ -58,7 +58,7 @@ class SetGame extends React.Component{
             previousState.displayedCards.push(newCard)
         }
 
-        this.setState(previousState)
+        this.setState({previousState})
     }
 
     generateNewCardIndex(){
@@ -206,6 +206,7 @@ class SetGame extends React.Component{
     
 
     render() {
+        console.log(this.state)
         return (
             <div>
                 <Score
