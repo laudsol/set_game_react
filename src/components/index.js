@@ -79,7 +79,7 @@ class SetGame extends React.Component{
             this.setState(previousState)
             return 
         }
-        
+
         let card1 = selectedCards[0]
         let card2 = selectedCards[1]
         let card3 = selectedCards[2]
@@ -88,7 +88,6 @@ class SetGame extends React.Component{
         let colorCheck = this.checkColors(card1, card2, card3)
         let shapeCheck = this.checkShapes(card1, card2, card3)
         let fillCheck = this.checkFill(card1, card2, card3) 
-
 
         if(numberCheck && colorCheck && shapeCheck && fillCheck){
             previousState.successFailText = 'Congratulations! You have selected a valid set!'
@@ -144,7 +143,7 @@ class SetGame extends React.Component{
         let matchingFill = card1.fill === card2.fill
         
         if(matchingFill){
-            if(card2.fill === card3.hfill){
+            if(card2.fill === card3.fill){
                 return true
             }
         } else {
