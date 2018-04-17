@@ -2,6 +2,7 @@ import React from 'react'
 import CardTable from './CardTable'
 import SetButton from './SetButton'
 import cardData from '../assets/cardData'
+import Score from './Score'
 
 class SetGame extends React.Component{
     constructor(props){
@@ -10,7 +11,8 @@ class SetGame extends React.Component{
             cardArr: '',
             displayedCards: [],
             allPlayedCardIndexes: [],
-            successFailText: ''
+            successFailText: '',
+            score: 0
         };
     }
 
@@ -49,6 +51,7 @@ class SetGame extends React.Component{
                 return card[attribute]
             }
         }).join('')
+        return code
     }
 
     selectCardForSet = (selectedCard) => {
@@ -91,6 +94,7 @@ class SetGame extends React.Component{
 
         if(numberCheck && colorCheck && shapeCheck && fillCheck){
             previousState.successFailText = 'Congratulations! You have selected a valid set!'
+            previousState.score += 1
         } else {
             previousState.successFailText = 'Unfortunately this is not a valid set. Please try again!'
         }
@@ -159,6 +163,9 @@ class SetGame extends React.Component{
     render() {
         return (
             <div>
+                <Score
+                    currentScore={this.state.score}
+                />
                 <SetButton
                     evaluateSet={this.evaluateSet}
                     successFailText={this.state.successFailText}
