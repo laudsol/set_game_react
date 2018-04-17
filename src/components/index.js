@@ -30,7 +30,8 @@ class SetGame extends React.Component{
         let selectedCards = []
 
         while(selectedCards.length < 12){
-            let cardIndex = Math.round(Math.random()*(this.state.cardArr.length-1))
+            // this.generateNewCard()
+            let cardIndex = this.generateNewCardIndex()
             if(!cardIndexes.includes(cardIndex)){
                 cardIndexes.push(cardIndex)
                 selectedCards.push(this.state.cardArr[cardIndex])
@@ -40,7 +41,28 @@ class SetGame extends React.Component{
         let previousState = this.state
         previousState.displayedCards = selectedCards
         previousState.allPlayedCardIndexes = cardIndexes
-        this.setState({previousState})
+        this.setState(previousState)
+    }
+
+    generateNewCard(removalCardIndex){
+        let previousState = this.state
+        let cardArr = previousState.cardArr
+        let randomIndex = Math.round(Math.random()*(cardArr.length-1))
+        let newCard = cardArr[randomIndex]
+        
+        previousState.cardArr = cardArr.slice(0,randomIndex).concat(cardArr.slice(randomIndex+1,cardArr.length))
+
+        if(removalCardIndex >= 0){
+            previousState.displayedCards[removalCardIndex] = newCard
+        } else {
+            previousState.displayedCards.push(newCard)
+        }
+
+        this.setState(previousState)
+    }
+
+    generateNewCardIndex(){
+        return Math.round(Math.random()*(this.state.cardArr.length-1))
     }
 
     createCardCode(card){
@@ -71,6 +93,29 @@ class SetGame extends React.Component{
 
     getSelectedCards(){
         return this.state.displayedCards.filter(card => !!card.isSelected)
+    }
+
+    replaceSetWithNewCards(){
+        let previousState = this.state
+        
+        previousState.displayedCards.map(card => {
+            let displayCard = card
+
+            if(!!card.isSelected){
+                let newIndexIsValid = false
+                while(newIndexIsValid === false){
+                    let newIndex = this.generateNewCardIndex()
+                    if(!previousState.allPlayedCardIndexes.includes(newIndex)){
+                        displayCard = this.state.cardArr[newIndex]
+                        newIndexIsValid = true
+                    }
+
+                }
+
+            }
+            return displayCard
+        })
+
     }
 
     evaluateSet = () => {
