@@ -10,7 +10,8 @@ class SetGame extends React.Component{
             cardArr: '',
             displayedCards: [],
             allPlayedCardIndexes: [],
-            selectedCards: []
+            selectedCards: [],
+            successFailText: ''
         };
     }
 
@@ -80,13 +81,14 @@ class SetGame extends React.Component{
         let shapeCheck = this.checkShapes(card1, card2, card3)
         let fillCheck = this.checkFill(card1, card2, card3) 
 
+        let previousState = this.state
+
         if(numberCheck && colorCheck && shapeCheck && fillCheck){
-            console.log('its a set!!!')
-            return true
+            previousState.successFailText = 'Congratulations! You have selected a valid set!'
         } else {
-            console.log('its NOT a set :(')
-            return false
+            previousState.successFailText = 'Unfortunately this is not a valid set. Please try again!'
         }
+        this.setState(previousState)
     }
 
     checkNumbers(card1, card2, card3) {
@@ -153,6 +155,7 @@ class SetGame extends React.Component{
             <div>
                 <SetButton
                     evaluateSet={this.evaluateSet}
+                    successFailText={this.state.successFailText}
                 />
                 <CardTable
                     activeCards={this.state.displayedCards}

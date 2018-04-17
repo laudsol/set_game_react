@@ -13,9 +13,13 @@ class SetButton extends React.Component{
 
     render() {
         return (
-            <Button bsStyle="primary" bsSize="large" onClick={()=> this.evaluateSet()}>
-                Set Button
-            </Button>
+            <div className="setButtonContainer">
+                <div className="successFailText">{this.props.successFailText}
+                </div>
+                <Button bsStyle="primary" bsSize="large" onClick={()=> this.evaluateSet()}>
+                    Set Button
+                </Button>
+            </div>
         )
     }    
 }
