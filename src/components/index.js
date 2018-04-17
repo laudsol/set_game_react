@@ -26,22 +26,9 @@ class SetGame extends React.Component{
     }
 
     setInitialCards(){
-        let cardIndexes = []
-        let selectedCards = []
-
-        while(selectedCards.length < 12){
-            // this.generateNewCard()
-            let cardIndex = this.generateNewCardIndex()
-            if(!cardIndexes.includes(cardIndex)){
-                cardIndexes.push(cardIndex)
-                selectedCards.push(this.state.cardArr[cardIndex])
-            }
+        for(let i = 0; i < 12; i++){
+            this.generateNewCard()
         }
-
-        let previousState = this.state
-        previousState.displayedCards = selectedCards
-        previousState.allPlayedCardIndexes = cardIndexes
-        this.setState(previousState)
     }
 
     generateNewCard(removalCardIndex){
@@ -58,7 +45,7 @@ class SetGame extends React.Component{
             previousState.displayedCards.push(newCard)
         }
 
-        this.setState({previousState})
+        this.setState(previousState)
     }
 
     generateNewCardIndex(){
@@ -206,7 +193,6 @@ class SetGame extends React.Component{
     
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Score
