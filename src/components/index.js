@@ -72,6 +72,14 @@ class SetGame extends React.Component{
 
     evaluateSet = () => {
         let selectedCards = this.getSelectedCards()
+        let previousState = this.state
+
+        if(selectedCards.length !== 3){
+            previousState.successFailText = 'Woops! A set must contain exactly 3 cards. Please try again!'
+            this.setState(previousState)
+            return 
+        }
+        
         let card1 = selectedCards[0]
         let card2 = selectedCards[1]
         let card3 = selectedCards[2]
@@ -81,7 +89,6 @@ class SetGame extends React.Component{
         let shapeCheck = this.checkShapes(card1, card2, card3)
         let fillCheck = this.checkFill(card1, card2, card3) 
 
-        let previousState = this.state
 
         if(numberCheck && colorCheck && shapeCheck && fillCheck){
             previousState.successFailText = 'Congratulations! You have selected a valid set!'
