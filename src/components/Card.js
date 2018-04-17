@@ -38,12 +38,27 @@ class Card extends React.Component{
     }
 
     selectCardForSet(){
+        let cardData = this.state.cardData
+        if(!!this.state.cardData.selected){
+            cardData.isSelected = false
+        } else {
+            cardData.isSelected = true
+        }
+
+        this.setState(cardData)
         this.props.selectCardForSet(this.state.cardData)
+    }
+
+    isSelected(){
+        if(this.props.cardData){
+            console.log(this.props.cardData)
+            return !!this.props.cardData.isSelected? "Card isSelected" : 'Card'
+        }
     }
 
     render() {
         return (
-            <div className="Card" onClick={()=> this.selectCardForSet()}>
+            <div className={this.isSelected()} onClick={()=> this.selectCardForSet()}>
                 <div className="shapeContainer">
                     {this.buildCardShapes()}
                 </div>    
