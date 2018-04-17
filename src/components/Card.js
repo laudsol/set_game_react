@@ -39,7 +39,7 @@ class Card extends React.Component{
 
     selectCardForSet(){
         let cardData = this.state.cardData
-        if(!!this.state.cardData.selected){
+        if(!!cardData.isSelected){
             cardData.isSelected = false
         } else {
             cardData.isSelected = true
