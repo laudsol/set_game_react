@@ -10,7 +10,6 @@ class SetGame extends React.Component{
             cardArr: '',
             displayedCards: [],
             allPlayedCardIndexes: [],
-            selectedCards: [],
             successFailText: ''
         };
     }
@@ -42,36 +41,37 @@ class SetGame extends React.Component{
         this.setState({previousState})
     }
 
-    selectCardForSet = (card) => {
-        let cardCode = Object.keys(card).map(attribute => {
+    createCardCode(card){
+        let code = Object.keys(card).map(attribute => {
             if(typeof(card[attribute]) === 'string'){
                 return card[attribute].slice(0,1)
             } else {
                 return card[attribute]
             }
         }).join('')
+    }
 
-        card.cardCode = cardCode
-
+    selectCardForSet = (selectedCard) => {
         let previousState = this.state
-        let cardAlreadySelected = false
-        
-        previousState.selectedCards.forEach((card, i) => {
-            if(card.cardCode === cardCode){
-                cardAlreadySelected = true
-                previousState.selectedCards.splice(i, 1)
+        let selectedCardCode = this.createCardCode(selectedCard)
+
+        previousState.displayedCards.map(card => {
+            if(selectedCardCode === this.createCardCode(card)){
+                return selectedCard
+            } else {
+                return card
             }
         })
-
-        if(!cardAlreadySelected){
-            previousState.selectedCards.push(card)
-        }
 
         this.setState(previousState)
     }
 
+    getSelectedCards(){
+        return this.state.displayedCards.filter(card => !!card.isSelected)
+    }
+
     evaluateSet = () => {
-        let selectedCards = this.state.selectedCards
+        let selectedCards = this.getSelectedCards()
         let card1 = selectedCards[0]
         let card2 = selectedCards[1]
         let card3 = selectedCards[2]

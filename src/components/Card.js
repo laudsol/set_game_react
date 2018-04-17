@@ -38,7 +38,7 @@ class Card extends React.Component{
     }
 
     selectCardForSet(){
-        let cardData = this.state.cardData
+        let cardData = this.state.cardData  
         if(!!cardData.isSelected){
             cardData.isSelected = false
         } else {
@@ -50,10 +50,7 @@ class Card extends React.Component{
     }
 
     isSelected(){
-        if(this.props.cardData){
-            console.log(this.props.cardData)
             return !!this.props.cardData.isSelected? "Card isSelected" : 'Card'
-        }
     }
 
     render() {
