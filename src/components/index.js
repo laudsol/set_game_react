@@ -79,29 +79,6 @@ class SetGame extends React.Component{
             .filter(card => !!card.cardInfo.isSelected)
     }
 
-    replaceSetWithNewCards(){
-        let previousState = this.state
-        
-        previousState.displayedCards.map(card => {
-            let displayCard = card
-
-            if(!!card.isSelected){
-                let newIndexIsValid = false
-                while(newIndexIsValid === false){
-                    let newIndex = this.generateNewCardIndex()
-                    if(!previousState.allPlayedCardIndexes.includes(newIndex)){
-                        displayCard = this.state.cardArr[newIndex]
-                        newIndexIsValid = true
-                    }
-
-                }
-
-            }
-            return displayCard
-        })
-
-    }
-
     evaluateSet = () => {
         let selectedCards = this.getSelectedCards()
         let previousState = this.state
@@ -128,7 +105,7 @@ class SetGame extends React.Component{
                 let cardArr = previousState.cardArr
                 let randomIndex = this.generateNewCardIndex(cardArr)
                 let newCard = cardArr[randomIndex]
-                previousState.cardArr = this.removeOldCard(cardArr, card.index)
+                previousState.cardArr = this.removeOldCard(cardArr, randomIndex)
                 previousState.displayedCards[card.index] = newCard
             })
         } else {
@@ -197,6 +174,7 @@ class SetGame extends React.Component{
     
 
     render() {
+        console.log(this.state.displayedCards)
         return (
             <div>
                 <Score

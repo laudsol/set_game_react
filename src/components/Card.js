@@ -6,9 +6,9 @@ class Card extends React.Component{
         this.state = {}
     }
 
-    componentDidMount(){
-        this.setState({cardData: this.props.cardData})
-    }
+    // componentDidMount(){
+    //     this.setState({cardData: this.props.cardData})
+    // }
 
     classNameBuilder(cardData){
         let shapeColorName = ''
@@ -38,15 +38,14 @@ class Card extends React.Component{
     }
 
     selectCardForSet(){
-        let cardData = this.state.cardData  
+        let cardData = this.props.cardData  
         if(!!cardData.isSelected){
             cardData.isSelected = false
         } else {
             cardData.isSelected = true
         }
 
-        this.setState(cardData)
-        this.props.selectCardForSet(this.state.cardData)
+        this.props.selectCardForSet(cardData)
     }
 
     isSelected(){
