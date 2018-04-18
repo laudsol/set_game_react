@@ -187,7 +187,7 @@ class SetGame extends React.Component{
                     addCards={this.addCards}
                 />
                 <CardTable
-                    activeCards={this.state.displayedCards}
+                    displayedCards={this.state.displayedCards}
                     selectCardForSet={this.selectCardForSet}
                 />
             </div>
